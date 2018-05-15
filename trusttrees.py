@@ -394,6 +394,7 @@ def get_graph_data_for_ns_results( ns_list, ns_results ):
     # Make all nameservers without any IP red because they might be vulnerable.
     for ns_hostname, ns_hostname_ip_list in NS_IP_MAP.iteritems():
         if len( ns_hostname_ip_list ) == 0:
+            print ( ns_hostname , args.target_hostname, "FAILED_RED" )
             return_graph_data_string += "\"" + ns_hostname + "\" [shape=ellipse, style=filled, fillcolor=\"#ff0000\"];\n"
 
         base_domain = get_base_domain( ns_hostname )
@@ -492,8 +493,8 @@ if __name__ == "__main__":
             if e.errno != errno.EEXIST:
                 raise
         grapher.draw( file_name, prog="dot" )
-        if args.open:
-            print( "[ STATUS ] Opening final graph..." )
-            subprocess_call( [ "open", file_name ])
+        #if args.open:
+            #print( "[ STATUS ] Opening final graph..." )
+            #subprocess_call( [ "open", file_name ])
 
     print( "[ SUCCESS ] Finished generating graph!" )
